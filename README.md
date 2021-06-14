@@ -7,7 +7,7 @@ dataset for multiple digits recognition task from MNIST (http://yann.lecun.com/e
   	<img src="examples/train/8/70.png" width="800" height="100">
 </p>
 
-You can download generated data in release tab.
+
 See in `examples` folder:
 
 ```
@@ -46,7 +46,7 @@ labels.csv
 
 Clone this repository:
 ```bash
-git clone https://github.com/vndee/multi-mnist
+git clone https://github.com/aashishkumar0228/multi-mnist.git
 ```
 Requirements:
 
