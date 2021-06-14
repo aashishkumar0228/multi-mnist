@@ -12,12 +12,47 @@ output_dir = '../output'
 label_file = 'labels.csv'
 
 os.makedirs(output_dir, exist_ok=True)
-n_samples_train = [0, 10000, 10000, 30000, 30000, 100000, 100000, 100000, 100000]
-n_samples_test = [0, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+n_samples_train = [0, 10000, 20000, 30000, 40000, 50000, 100000, 100000, 100000]
+n_samples_test = [0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000]
 
 cnt = 0
 number_of_samples_per_class = 10
 overlap_size = 30
+
+
+# def remove_zero_padding(arr):
+#     """
+#     Remove all zero padding in the left and right bounding of arr
+#     :param arr: image as numpy array
+#     :return: image as numpy array
+#     """
+
+#     left_bounding = 0
+#     right_bounding = 0
+
+#     t = 0
+#     for i in range(arr.shape[0]):
+#         if t == 1:
+#             break
+
+#         for j in range(arr.shape[1]):
+#             if not arr[i][j] == 0:
+#                 left_bounding = i
+#                 t = 1
+#                 break
+
+#     t = 0
+#     for i in reversed(range(arr.shape[0])):
+#         if t == 1:
+#             break
+
+#         for j in range(arr.shape[1]):
+#             if not arr[i][j] == 0:
+#                 right_bounding = i
+#                 t = 1
+#                 break
+
+#     return arr[:, left_bounding:right_bounding]
 
 
 def remove_zero_padding(arr):
@@ -31,28 +66,30 @@ def remove_zero_padding(arr):
     right_bounding = 0
 
     t = 0
-    for i in range(arr.shape[0]):
+    for j in range(arr.shape[1]):
         if t == 1:
             break
 
-        for j in range(arr.shape[1]):
+        for i in range(arr.shape[0]):
             if not arr[i][j] == 0:
-                left_bounding = i
+                left_bounding = j
                 t = 1
                 break
 
     t = 0
-    for i in reversed(range(arr.shape[0])):
+    for j in reversed(range(arr.shape[1])):
         if t == 1:
             break
 
-        for j in range(arr.shape[1]):
+        for i in range(arr.shape[0]):
             if not arr[i][j] == 0:
-                right_bounding = i
+                right_bounding = j
                 t = 1
                 break
 
     return arr[:, left_bounding:right_bounding]
+
+
 
 
 def print_arr(arr):
@@ -156,7 +193,7 @@ def generator(images, labels, n_digits, n_samples, file_out, name='train', overl
         im_mer = merge(dig_list, overlap)
         im_mer = np.concatenate((np.zeros((28, 2)), im_mer), axis=1)
         im_mer = np.concatenate((im_mer, np.zeros((28, 2))), axis=1)
-
+        im_mer = 255 - im_mer
         cv2.imwrite(os.path.join(save_dir, str(cnt) + '.png'), im_mer)
 
         lb = ""
@@ -186,8 +223,8 @@ if __name__ == '__main__':
     print('--------------Generate train set-----------------')
     writer = open(os.path.join(output_dir, 'train', label_file), 'w+')
 
-    for num_digits in range(2, 10):
-        generator(train_file, train_label, num_digits, n_samples_train[num_digits], writer, name='train')
+    # for num_digits in range(2, 6):
+    #     generator(train_file, train_label, num_digits, n_samples_train[num_digits], writer, name='train')
 
     writer.close()
     print('-------------------------------------------------\n')
@@ -195,7 +232,7 @@ if __name__ == '__main__':
     print('--------------Generate test set------------------')
     writer = open(os.path.join(output_dir, 'test', label_file), 'w+')
 
-    for num_digits in range(2, 10):
+    for num_digits in range(8, 9):
         generator(test_file, test_label, num_digits, n_samples_test[num_digits], writer, name='test')
 
     writer.close()
