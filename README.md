@@ -66,4 +66,4 @@ Change some parameter in `main.py`:
 - `output_dir`: Path to your expected output directory.
 - `number_of_samples_per_class`: Number of samples for each number of digit.
 
-Run `python3 main.py` and take a look at `output_dir`.
+Run `python main.py` and take a look at `output_dir`.
