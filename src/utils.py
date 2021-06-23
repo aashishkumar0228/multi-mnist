@@ -78,7 +78,7 @@ def get_edit_distance_freq(df):
     
     return edit_distance_freq, wrong_count
 
-def show_edit_distance_freq_graph(edit_distance_freq, title):
+def show_edit_distance_freq_graph(edit_distance_freq, title, figure_folder=None):
     plt.figure(figsize=(7,5))
     plt.bar(edit_distance_freq.keys(),edit_distance_freq.values(),width = 0.8,color="orange")
     for i in edit_distance_freq:
@@ -90,7 +90,7 @@ def show_edit_distance_freq_graph(edit_distance_freq, title):
     plt.xlabel("Edit Distance",fontsize=16)
     plt.ylabel("Frequency",fontsize=16)
     plt.title(title)
-    plt.savefig(title + ".png")
+    plt.savefig(figure_folder + title + ".png")
     
 def get_word_leng_freq(df):
     correct_word_length_freq = {}
@@ -111,7 +111,7 @@ def get_word_leng_freq(df):
         
     return correct_word_length_freq, wrong_word_length_freq
 
-def show_word_length_freq_graph(freq_var, title):
+def show_word_length_freq_graph(freq_var, title, figure_folder=None):
     plt.figure(figsize=(7,5))
     plt.bar(freq_var.keys(),freq_var.values(),width = 0.8,color="orange")
     for i in freq_var:
@@ -122,4 +122,4 @@ def show_word_length_freq_graph(freq_var, title):
     plt.xlabel("word length",fontsize=16)
     plt.ylabel("Frequency",fontsize=16)
     plt.title(title)
-    plt.savefig(title + ".png")
+    plt.savefig(figure_folder + title + ".png")

@@ -1,5 +1,9 @@
 # Output
 output/
+data_hw/
+output_2/
+saved_models/
+figures/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

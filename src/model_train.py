@@ -12,25 +12,38 @@ from utils import *
 
 
 # model names to save
-model_folder_name = "multi_digit_model_1_to_5_real"
-model_json_file_name = "multi_digit_model_1_to_5_real_json.json"
-model_weights_file_name = "multi_digit_model_1_to_5_real_weights.h5"
-model_tflite_name = "worksheet.multi_digit_model_1_to_5_real.tflite"
+output_dir = "../saved_models/"
+figure_folder = "../figures/"
+if not os.path.isdir(output_dir):
+    os.mkdir(output_dir)
+
+if not os.path.isdir(figure_folder):
+    os.mkdir(figure_folder)
+
+model_folder_name = output_dir + "multi_digit_model_1_to_5_real"
+model_json_file_name = output_dir + "multi_digit_model_1_to_5_real_json.json"
+model_weights_file_name = output_dir + "multi_digit_model_1_to_5_real_weights.h5"
+model_tflite_name = output_dir + "worksheet.multi_digit_model_1_to_5_real.tflite"
 
 # dataset paths
 train_df_path = "/home/kaushikdas/aashish/multi-digit-dataset/train/labels_1_to_8.csv"
 train_image_base_path = "/home/kaushikdas/aashish/multi-digit-dataset/train/combined_1_to_8_real/"
 test_df_path = "/home/kaushikdas/aashish/multi-digit-dataset/test/labels_1_to_8.csv"
 test_image_base_path = "/home/kaushikdas/aashish/multi-digit-dataset/test/combined_1_to_8_real/"
+# Local test paths
+# train_df_path = "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_2/test/labels_1.csv"
+# train_image_base_path = "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_2/test/1_reshape/"
+# test_df_path = "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_2/test/labels_1.csv"
+# test_image_base_path = "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_2/test/1_reshape/"
 
-batch_size = 32
 img_height = 28
 img_width = 168
 num_time_steps = 42  # img_width//4
 max_digit_length = 8
 shuffle = True
 
-epochs = 1
+batch_size = 32
+epochs = 10
 early_stopping_patience = 3
 
 # get train and test dataset
@@ -82,7 +95,7 @@ plt.xlabel("Epochs",fontsize=15)
 plt.ylabel("Loss",fontsize=15)
 plt.grid(alpha=0.3)
 plt.legend()
-plt.savefig('loss.png')
+plt.savefig(figure_folder + 'loss.png')
 
 prediction_model = keras.models.Model(
     model.get_layer(name="image").input, model.get_layer(name="dense2").output
@@ -103,7 +116,7 @@ df_train_labels['preds'] = pred_texts
 
 print("\nCalculating Edit Distance\n")
 train_edit_distance_freq, test_wrong_count = get_edit_distance_freq(df_train_labels)
-show_edit_distance_freq_graph(train_edit_distance_freq, "train_edit_distance_frequency")
+show_edit_distance_freq_graph(train_edit_distance_freq, "train_edit_distance_frequency", figure_folder)
 
 total_train_samples = df_train_labels.shape[0]
 print("Train wrong:", test_wrong_count)
@@ -113,7 +126,7 @@ print("Train Accuracy %:",(1 - (test_wrong_count/total_train_samples))*100)
 
 print("\nCalculating Word Length Frequency\n")
 train_correct_word_length_freq, train_wrong_word_length_freq = get_word_leng_freq(df_train_labels)
-show_word_length_freq_graph(train_wrong_word_length_freq,"train_wrong_word_length_frequency")
+show_word_length_freq_graph(train_wrong_word_length_freq,"train_wrong_word_length_frequency", figure_folder)
 
 
 # save prediction model
