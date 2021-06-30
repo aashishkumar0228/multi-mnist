@@ -12,7 +12,7 @@ class MultiDigitDataLoader(tf.keras.utils.Sequence):
                  img_width, 
                  num_time_steps,
                  transform,
-                 max_digit_length=3, 
+                 max_digit_length=8, 
                  shuffle=True):
         '''
         df_path: path for dataframe which has file_name and labels

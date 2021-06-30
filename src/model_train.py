@@ -23,6 +23,15 @@ def parse_args():
     args = parser.parse_args()
     return args
 
+def get_preds(dataset, model):
+    pred_texts = []
+    for batch in dataset:
+        batch_images = batch["image"]
+        preds = model.predict(batch_images)
+        pred_texts_temp = decode_batch_predictions(preds)
+        pred_texts += pred_texts_temp
+    return pred_texts
+
 def main():
     args = parse_args()
     prefix = args.prefix
@@ -65,14 +74,14 @@ def main():
                                                     shuffle = shuffle)
 
     test_multi_digit_dataset = MultiDigitDataLoader(df_path = test_df_path,
-                                                image_base_path = test_image_base_path,
-                                                batch_size = batch_size,
-                                                img_height = img_height,
-                                                img_width = img_width,
-                                                num_time_steps = num_time_steps,
-                                                transform = test_transform,
-                                                max_digit_length = max_digit_length,
-                                                shuffle = shuffle)
+                                                    image_base_path = test_image_base_path,
+                                                    batch_size = batch_size,
+                                                    img_height = img_height,
+                                                    img_width = img_width,
+                                                    num_time_steps = num_time_steps,
+                                                    transform = test_transform,
+                                                    max_digit_length = max_digit_length,
+                                                    shuffle = shuffle)
 
     print("Sanity Check Training Data")
     check_dataset(train_multi_digit_dataset)
@@ -109,24 +118,30 @@ def main():
     print("\n\n")
     print(prediction_model.summary())
     print("\n\n")
-
-    pred_texts = []
-    for batch in train_multi_digit_dataset:
-        batch_images = batch["image"]
-        preds = prediction_model.predict(batch_images)
-        pred_texts_temp = decode_batch_predictions(preds)
-        pred_texts += pred_texts_temp
-
+    
+    train_pred_texts = get_preds(train_multi_digit_dataset, prediction_model)
     df_train_labels = train_multi_digit_dataset.df.copy()
-    df_train_labels['preds'] = pred_texts
+    df_train_labels['preds'] = train_pred_texts
+
+    test_pred_texts = get_preds(test_multi_digit_dataset, prediction_model)
+    df_test_labels = test_multi_digit_dataset.df.copy()
+    df_test_labels['preds'] = test_pred_texts
 
     print("\nCalculating Edit Distance\n")
     train_edit_distance_freq, train_wrong_count = get_edit_distance_freq(df_train_labels)
     show_edit_distance_freq_graph(train_edit_distance_freq, "train_edit_distance_frequency", figure_folder_prefix)
 
+    test_edit_distance_freq, test_wrong_count = get_edit_distance_freq(df_test_labels)
+    show_edit_distance_freq_graph(test_edit_distance_freq, "test_edit_distance_frequency", figure_folder_prefix)
+
     print("\nCalculating Word Length Frequency\n")
     train_correct_word_length_freq, train_wrong_word_length_freq = get_word_leng_freq(df_train_labels)
     show_word_length_freq_graph(train_wrong_word_length_freq,"train_wrong_word_length_frequency", figure_folder_prefix)
+    show_word_length_freq_graph(train_correct_word_length_freq,"train_correct_word_length_frequency", figure_folder_prefix)
+
+    test_correct_word_length_freq, test_wrong_word_length_freq = get_word_leng_freq(df_test_labels)
+    show_word_length_freq_graph(test_wrong_word_length_freq,"test_wrong_word_length_frequency", figure_folder_prefix)
+    show_word_length_freq_graph(test_correct_word_length_freq,"test_correct_word_length_frequency", figure_folder_prefix)
 
     # save prediction model
     print("\n\nSaving Prediction Model\n\n")
@@ -154,12 +169,22 @@ def main():
     print("Train size:", total_train_samples)
     print("Train Error %:",train_wrong_count/total_train_samples*100)
     print("Train Accuracy %:",(1 - (train_wrong_count/total_train_samples))*100)
+
+    total_test_samples = df_test_labels.shape[0]
+    print("Test wrong:", test_wrong_count)
+    print("Test size:", total_test_samples)
+    print("Test Error %:",test_wrong_count/total_test_samples*100)
+    print("Test Accuracy %:",(1 - (test_wrong_count/total_test_samples))*100)
     
-    train_accuracy_file = open(figure_folder_prefix + '/train_accuracy.txt', 'w')
+    train_accuracy_file = open(figure_folder_prefix + '/train_test_accuracy.txt', 'w')
     train_accuracy_file.write("Train wrong: {}\n".format(train_wrong_count))
     train_accuracy_file.write("Train size: {}\n".format(total_train_samples))
     train_accuracy_file.write("Train Error %: {}\n".format(train_wrong_count/total_train_samples*100))
-    train_accuracy_file.write("Train Accuracy %: {:.2f}\n".format((1 - (train_wrong_count/total_train_samples))*100))
+    train_accuracy_file.write("Train Accuracy %: {:.2f}\n\n".format((1 - (train_wrong_count/total_train_samples))*100))
+    train_accuracy_file.write("Test wrong: {}\n".format(test_wrong_count))
+    train_accuracy_file.write("Test size: {}\n".format(total_test_samples))
+    train_accuracy_file.write("Test Error %: {}\n".format(test_wrong_count/total_test_samples*100))
+    train_accuracy_file.write("Test Accuracy %: {:.2f}\n".format((1 - (test_wrong_count/total_test_samples))*100))
     train_accuracy_file.close()
 
 
