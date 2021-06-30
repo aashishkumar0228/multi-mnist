@@ -58,7 +58,7 @@ class MultiDigitDataLoader(tf.keras.utils.Sequence):
     
     def get_image(self, filename):
         img = cv2.imread(filename, 0)
-        img = self.transform(image=img)["image"]
+        # img = self.transform(image=img)["image"]
         img = img.reshape((self.img_height, self.img_width, 1))
         return img
     
