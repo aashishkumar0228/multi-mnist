@@ -3,9 +3,9 @@ figure_folder = "../figures/"
 
 # dataset paths
 train_df_path = "/home/kaushikdas/aashish/multi-digit-dataset/train/labels_1_to_8.csv"
-train_image_base_path = "/home/kaushikdas/aashish/multi-digit-dataset/train/combined_1_to_8_random_real/"
+train_image_base_path = "/home/kaushikdas/aashish/multi-digit-dataset/train/combined_1_to_8_real/"
 test_df_path = "/home/kaushikdas/aashish/multi-digit-dataset/test/labels_1_to_8.csv"
-test_image_base_path = "/home/kaushikdas/aashish/multi-digit-dataset/test/combined_1_to_8_random_real/"
+test_image_base_path = "/home/kaushikdas/aashish/multi-digit-dataset/test/combined_1_to_8_real/"
 # Local test paths
 # train_df_path = "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_2/test/labels_1.csv"
 # train_image_base_path = "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_2/test/1_reshape/"
