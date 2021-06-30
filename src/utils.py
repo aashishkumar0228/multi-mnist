@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from tensorflow import keras
 import matplotlib.pyplot as plt
 
@@ -34,7 +35,12 @@ def get_loss_plot(history_1, figure_folder=None):
     plt.ylabel("Loss",fontsize=15)
     plt.grid(alpha=0.3)
     plt.legend()
-    plt.savefig(figure_folder + 'loss.png')
+    plt.savefig(figure_folder + '/loss.png')
+
+def create_loss_csv(history_1, figure_folder=None):
+    loss_df = pd.DataFrame(list(zip(history_1.epoch, history_1.history['loss'], history_1.history['val_loss'])), 
+                            columns = ['Epoch', 'Train_Loss', 'Val_loss'])
+    loss_df.to_csv(figure_folder + "/loss.csv", index=None)
 
 
 def editDistDP(str1, str2): 
@@ -99,7 +105,7 @@ def show_edit_distance_freq_graph(edit_distance_freq, title, figure_folder=None)
     plt.xlabel("Edit Distance",fontsize=16)
     plt.ylabel("Frequency",fontsize=16)
     plt.title(title)
-    plt.savefig(figure_folder + title + ".png")
+    plt.savefig(figure_folder + "/" + title + ".png")
     
 def get_word_leng_freq(df):
     correct_word_length_freq = {}
@@ -131,4 +137,4 @@ def show_word_length_freq_graph(freq_var, title, figure_folder=None):
     plt.xlabel("word length",fontsize=16)
     plt.ylabel("Frequency",fontsize=16)
     plt.title(title)
-    plt.savefig(figure_folder + title + ".png")
+    plt.savefig(figure_folder + "/" + title + ".png")
