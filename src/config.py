@@ -31,7 +31,7 @@ max_digit_length = 8
 shuffle = True
 
 # model params
-batch_size = 32
+batch_size = 256
 epochs = 10
 early_stopping_patience = 3
 
