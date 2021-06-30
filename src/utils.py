@@ -26,6 +26,16 @@ def decode_batch_predictions(pred):
         output_preds.append(pred_str)
     return output_preds
 
+def get_loss_plot(history_1, figure_folder=None):
+    plt.plot(history_1.epoch,history_1.history['loss'],label="loss") # Loss curve for training set
+    plt.plot(history_1.epoch,history_1.history['val_loss'],label="val_loss") # Loss curve for validation set
+    plt.title("Loss Curve",fontsize=18)
+    plt.xlabel("Epochs",fontsize=15)
+    plt.ylabel("Loss",fontsize=15)
+    plt.grid(alpha=0.3)
+    plt.legend()
+    plt.savefig(figure_folder + 'loss.png')
+
 
 def editDistDP(str1, str2): 
     m = len(str1)
@@ -85,8 +95,7 @@ def show_edit_distance_freq_graph(edit_distance_freq, title, figure_folder=None)
         plt.text(i,edit_distance_freq[i],str(edit_distance_freq[i]),horizontalalignment='center',fontsize=10)
 
     plt.tick_params(labelsize = 14)
-#     plt.xticks(edit_distance_freq.keys())
-    plt.xticks(range(0,5))
+    plt.xticks(range(0,8))
     plt.xlabel("Edit Distance",fontsize=16)
     plt.ylabel("Frequency",fontsize=16)
     plt.title(title)
@@ -118,7 +127,7 @@ def show_word_length_freq_graph(freq_var, title, figure_folder=None):
         plt.text(i,freq_var[i],str(freq_var[i]),horizontalalignment='center',fontsize=10)
 
     plt.tick_params(labelsize = 14)
-    plt.xticks(range(0,18))
+    plt.xticks(range(0,10))
     plt.xlabel("word length",fontsize=16)
     plt.ylabel("Frequency",fontsize=16)
     plt.title(title)
