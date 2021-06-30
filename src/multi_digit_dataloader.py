@@ -71,7 +71,6 @@ class MultiDigitDataLoader(tf.keras.utils.Sequence):
         x_train = [self.get_image(self.image_base_path + self.df['file_name'][i]) for i in range(idx_start,idx_end)]
         x_train = np.array(x_train)
         x_train = np.transpose(x_train, axes=[0,2,1,3])
-        x_train = x_train / 255
         
         input_length_arr = self.num_time_steps * np.ones(shape=(idx_end - idx_start, 1), dtype="int64")
         
