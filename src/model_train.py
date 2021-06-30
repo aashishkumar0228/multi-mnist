@@ -11,7 +11,7 @@ import time
 
 
 from multi_digit_dataloader import MultiDigitDataLoader
-from models import build_model_small, build_big_model
+from models import build_small_model, build_big_model
 from utils import *
 from config import *
 
@@ -90,7 +90,7 @@ def main():
     print("\n\n")
 
     # Get the model
-    model = build_big_model(img_height)
+    model = build_small_model(img_height)
     print(model.summary())
     print("\n\n")
 

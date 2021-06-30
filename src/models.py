@@ -20,7 +20,7 @@ class CTCLayer(layers.Layer):
         return y_pred
 
 
-def build_model_small(img_height):
+def build_small_model(img_height):
     # Inputs to the model
     input_img = layers.Input(
         shape=(None, img_height, 1), name="image", dtype="float32"
