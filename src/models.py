@@ -81,20 +81,25 @@ def build_small_model(img_height):
     model.compile(optimizer=opt)
     return model
 
+
 def build_big_model(img_height):
     # Inputs to the model
     input_img = layers.Input(shape=(None, img_height, 1), name="image", dtype="float32")
     labels = layers.Input(name="label", shape=(None,), dtype="float32")
 
     # First conv block
-    x = layers.Conv2D(32,(3, 3),activation="gelu",padding="same",name="Conv1")(input_img)
-    x = layers.Conv2D(32,(3, 3),activation="gelu",padding="same",name="Conv2")(x)
+    x = layers.Conv2D(32,(3, 3),padding="same",name="Conv1")(input_img)
+    x = layers.ELU()(x)
+    x = layers.Conv2D(32,(3, 3),padding="same",name="Conv2")(x)
+    x = layers.ELU()(x)
     x = layers.MaxPooling2D((2, 2), name="pool1")(x)
     x = layers.Dropout(0.2, name="dropout1")(x)
 
     # Second conv block
-    x = layers.Conv2D(64,(3, 3),activation="gelu",padding="same",name="Conv3")(x)
-    x = layers.Conv2D(64,(3, 3),activation="gelu",padding="same",name="Conv4")(x)
+    x = layers.Conv2D(64,(3, 3),padding="same",name="Conv3")(x)
+    x = layers.ELU()(x)
+    x = layers.Conv2D(64,(3, 3),padding="same",name="Conv4")(x)
+    x = layers.ELU()(x)
     x = layers.MaxPooling2D((2, 2), name="pool2")(x)
     x = layers.Dropout(0.2, name="dropout2")(x)
 
