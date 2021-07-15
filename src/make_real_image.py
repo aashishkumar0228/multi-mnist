@@ -15,16 +15,16 @@ def modify_image_old(image_path):
     for i in range(0, original_img.shape[0]):
         for j in range(0, original_img.shape[1]):
             if original_img[i][j] == 255:
-                img[i][j] = 200
+                img[i][j] = randrange(190,210)
     blurImg = cv2.blur(img,(3,3))
     return blurImg
 
 
-# base_path      = "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_3/test/"
-# new_img_folder = "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_3/test/"
+# base_path      = "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_4/test/"
+# new_img_folder = "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_4/test/"
 
-base_path      = "/home/kaushikdas/aashish/multi-digit-dataset/output_3/train/"
-new_img_folder = "/home/kaushikdas/aashish/multi-digit-dataset/output_3/train/"
+base_path      = "/home/kaushikdas/aashish/multi-digit-dataset/output_4/train/"
+new_img_folder = "/home/kaushikdas/aashish/multi-digit-dataset/output_4/train/"
 
 old_folder = ['combined_1_to_8_random']
 new_folder = ['combined_1_to_8_random_real']
