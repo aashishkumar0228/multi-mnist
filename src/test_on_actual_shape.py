@@ -46,10 +46,8 @@ def main():
     model = tf.keras.models.load_model(args.model_path)
     print(model.summary())
 
-    test_df_path = "/home/kaushikdas/aashish/multi-digit-dataset/output_3/test/labels_1_to_8.csv"
-    test_image_base_path = "/home/kaushikdas/aashish/multi-digit-dataset/output_3/test/combined_1_to_8_actual_shape_real/"
     batch_size = 1
-    num_time_steps = 35
+    num_time_steps = 42
     max_digit_length = 8
     shuffle = False
 
@@ -58,7 +56,7 @@ def main():
                                ])
     
     test_multi_digit_dataset = MultiDigitDataLoaderActualShape(df_path = test_df_path,
-                                                               image_base_path = test_image_base_path,
+                                                               image_base_path = test_image_actual_shape_base_path,
                                                                batch_size = batch_size,
                                                                num_time_steps = num_time_steps,
                                                                transform = test_transform,

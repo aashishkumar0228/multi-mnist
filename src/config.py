@@ -6,6 +6,7 @@ train_df_path =         "/home/kaushikdas/aashish/multi-digit-dataset/output_4/t
 train_image_base_path = "/home/kaushikdas/aashish/multi-digit-dataset/output_4/train/combined_1_to_8_random_real/"
 test_df_path =          "/home/kaushikdas/aashish/multi-digit-dataset/output_4/test/labels_1_to_8.csv"
 test_image_base_path =  "/home/kaushikdas/aashish/multi-digit-dataset/output_4/test/combined_1_to_8_random_real/"
+test_image_actual_shape_base_path = "/home/kaushikdas/aashish/multi-digit-dataset/output_4/test/combined_1_to_8_actual_shape_real/"
 # Local test paths
 # train_df_path = "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_2/test/labels_1.csv"
 # train_image_base_path = "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_2/test/1_reshape/"
