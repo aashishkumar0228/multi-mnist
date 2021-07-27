@@ -120,6 +120,7 @@ def main():
     create_loss_csv(history_1, figure_folder_prefix)
 
     # get average weights
+    print("\n\nAveraging layer weights\n\n")
     moving_avg_opt.assign_average_vars(model.variables)
 
     prediction_model = keras.models.Model(
