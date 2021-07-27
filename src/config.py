@@ -33,7 +33,7 @@ shuffle = True
 
 # model params
 batch_size = 256
-epochs = 20
+epochs = 10
 early_stopping_patience = 3
 
 
