@@ -94,9 +94,11 @@ def main():
     # Get the model
     model = build_big_model_no_compile(img_height)
     opt = keras.optimizers.Adam()
-    moving_avg_opt = tfa.optimizers.MovingAverage(opt)
-    # stocastic_avg_opt = tfa.optimizers.SWA(opt)
-    model.compile(optimizer=moving_avg_opt)
+    # moving_avg_opt = tfa.optimizers.MovingAverage(opt)
+    stocastic_avg_opt = tfa.optimizers.SWA(opt)
+
+    # model.compile(optimizer=moving_avg_opt)
+    model.compile(optimizer=stocastic_avg_opt)
 
     print(model.summary())
     print("\n\n")
@@ -121,7 +123,8 @@ def main():
 
     # get average weights
     print("\n\nAveraging layer weights\n\n")
-    moving_avg_opt.assign_average_vars(model.variables)
+    # moving_avg_opt.assign_average_vars(model.variables)
+    stocastic_avg_opt.assign_average_vars(model.variables)
 
     prediction_model = keras.models.Model(
         model.get_layer(name="image").input, model.get_layer(name="dense2").output
