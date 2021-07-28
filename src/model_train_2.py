@@ -95,10 +95,12 @@ def main():
     model = build_big_model_no_compile(img_height)
     opt = keras.optimizers.Adam()
     # moving_avg_opt = tfa.optimizers.MovingAverage(opt)
-    stocastic_avg_opt = tfa.optimizers.SWA(opt)
+    # stochastic_avg_opt = tfa.optimizers.SWA(opt)
+    stochastic_avg_opt = tfa.optimizers.SWA(opt, start_averaging=4, average_period=5)
+
 
     # model.compile(optimizer=moving_avg_opt)
-    model.compile(optimizer=stocastic_avg_opt)
+    model.compile(optimizer=stochastic_avg_opt)
 
     print(model.summary())
     print("\n\n")
@@ -124,7 +126,7 @@ def main():
     # get average weights
     print("\n\nAveraging layer weights\n\n")
     # moving_avg_opt.assign_average_vars(model.variables)
-    stocastic_avg_opt.assign_average_vars(model.variables)
+    stochastic_avg_opt.assign_average_vars(model.variables)
 
     prediction_model = keras.models.Model(
         model.get_layer(name="image").input, model.get_layer(name="dense2").output
@@ -157,27 +159,6 @@ def main():
     show_word_length_freq_graph(test_wrong_word_length_freq,"test_wrong_word_length_frequency", figure_folder_prefix)
     show_word_length_freq_graph(test_correct_word_length_freq,"test_correct_word_length_frequency", figure_folder_prefix)
 
-    # save prediction model
-    print("\n\nSaving Prediction Model\n\n")
-    prediction_model.save(output_dir_prefix + "/" + model_folder_name)
-
-    model_json = prediction_model.to_json()
-    with open(output_dir_prefix + "/" + model_json_file_name, "w") as json_file:
-        json_file.write(model_json)
-
-    prediction_model.save_weights(output_dir_prefix + "/" + model_weights_file_name)
-
-    # convert to tflite model
-    print("\n\nConverting to TF Lite \n\n")
-    converter = tf.lite.TFLiteConverter.from_keras_model(prediction_model)
-    converter.optimizations = [tf.lite.Optimize.DEFAULT]
-
-    tflite_model = converter.convert()
-
-    with tf.io.gfile.GFile(output_dir_prefix + "/" + model_tflite_name, 'wb') as f:
-        f.write(tflite_model)
-
-
     total_train_samples = df_train_labels.shape[0]
     print("Train wrong:", train_wrong_count)
     print("Train size:", total_train_samples)
@@ -200,6 +181,31 @@ def main():
     train_accuracy_file.write("Test Error %: {}\n".format(test_wrong_count/total_test_samples*100))
     train_accuracy_file.write("Test Accuracy %: {:.2f}\n".format((1 - (test_wrong_count/total_test_samples))*100))
     train_accuracy_file.close()
+
+    # save prediction model
+    print("\n\nSaving Prediction Model\n\n")
+    prediction_model.save(output_dir_prefix + "/" + model_folder_name)
+
+    model_json = prediction_model.to_json()
+    with open(output_dir_prefix + "/" + model_json_file_name, "w") as json_file:
+        json_file.write(model_json)
+
+    prediction_model.save_weights(output_dir_prefix + "/" + model_weights_file_name)
+
+    # convert to tflite model
+    print("\n\nConverting to TF Lite \n\n")
+    converter = tf.lite.TFLiteConverter.from_keras_model(prediction_model)
+    converter.optimizations = [tf.lite.Optimize.DEFAULT]
+
+    tflite_model = converter.convert()
+
+    with tf.io.gfile.GFile(output_dir_prefix + "/" + model_tflite_name, 'wb') as f:
+        f.write(tflite_model)
+    
+    print("Done")
+
+
+    
 
 
 if __name__ == '__main__':
