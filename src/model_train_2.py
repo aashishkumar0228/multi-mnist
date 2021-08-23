@@ -95,8 +95,8 @@ def main():
     model = build_big_model_no_compile(img_height)
     opt = keras.optimizers.Adam()
     # moving_avg_opt = tfa.optimizers.MovingAverage(opt)
-    # stochastic_avg_opt = tfa.optimizers.SWA(opt)
-    stochastic_avg_opt = tfa.optimizers.SWA(opt, start_averaging=4, average_period=5)
+    stochastic_avg_opt = tfa.optimizers.SWA(opt)
+    # stochastic_avg_opt = tfa.optimizers.SWA(opt, start_averaging=4, average_period=5)
 
 
     # model.compile(optimizer=moving_avg_opt)
