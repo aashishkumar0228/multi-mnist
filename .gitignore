@@ -5,6 +5,9 @@ output_2/
 saved_models/
 figures/
 final_models/
+output_3/
+output_4/
+zone_classifier_data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
