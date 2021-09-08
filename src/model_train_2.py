@@ -128,6 +128,9 @@ def main():
     # moving_avg_opt.assign_average_vars(model.variables)
     stochastic_avg_opt.assign_average_vars(model.variables)
 
+    print("\n\nSaving Original Model\n\n")
+    model.save(output_dir_prefix + "/" + model_folder_name + "_original")
+
     prediction_model = keras.models.Model(
         model.get_layer(name="image").input, model.get_layer(name="dense2").output
     )
