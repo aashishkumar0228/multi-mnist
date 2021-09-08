@@ -8,12 +8,12 @@ from tqdm import tqdm
 
 test_path = ['../data/t10k-images-idx3-ubyte', '../data/t10k-labels-idx1-ubyte']
 train_path = ['../data/train-images-idx3-ubyte', '../data/train-labels-idx1-ubyte']
-output_dir = '../output'
+output_dir = '../output_2'
 label_file = 'labels.csv'
 
 os.makedirs(output_dir, exist_ok=True)
-n_samples_train = [0, 10000, 20000, 30000, 40000, 50000, 100000, 100000, 100000]
-n_samples_test = [0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000]
+n_samples_train = [0, 10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000]
+n_samples_test  = [0,  1000,  2000,  3000,  4000,  5000,  6000,  7000,  8000]
 
 cnt = 0
 number_of_samples_per_class = 10
@@ -86,7 +86,9 @@ def remove_zero_padding(arr):
                 right_bounding = j
                 t = 1
                 break
-
+    
+    left_bounding = max(0, left_bounding - 2)
+    right_bounding = min(right_bounding + 2, arr.shape[1])
     return arr[:, left_bounding:right_bounding]
 
 
@@ -223,8 +225,8 @@ if __name__ == '__main__':
     print('--------------Generate train set-----------------')
     writer = open(os.path.join(output_dir, 'train', label_file), 'w+')
 
-    for num_digits in range(2, 6):
-        generator(train_file, train_label, num_digits, n_samples_train[num_digits], writer, name='train')
+    for num_digits in range(1, 9):
+        generator(train_file, train_label, num_digits, n_samples_train[num_digits], writer, name='train', overlap=False)
 
     writer.close()
     print('-------------------------------------------------\n')
@@ -232,8 +234,8 @@ if __name__ == '__main__':
     print('--------------Generate test set------------------')
     writer = open(os.path.join(output_dir, 'test', label_file), 'w+')
 
-    for num_digits in range(8, 9):
-        generator(test_file, test_label, num_digits, n_samples_test[num_digits], writer, name='test')
+    for num_digits in range(1, 9):
+        generator(test_file, test_label, num_digits, n_samples_test[num_digits], writer, name='test', overlap=False)
 
     writer.close()
     print('-------------------------------------------------\n')
