@@ -90,7 +90,6 @@ class MultiDigitDataLoaderActualShape(tf.keras.utils.Sequence):
     def __init__(self, 
                  df_path, 
                  image_base_path, 
-                 batch_size, 
                  num_time_steps,
                  transform,
                  max_digit_length=3, 
@@ -103,7 +102,7 @@ class MultiDigitDataLoaderActualShape(tf.keras.utils.Sequence):
         img_width: width of image
         num_time_steps = number of input time steps for lstm layer
         '''
-        self.batch_size = int(batch_size)
+        self.batch_size = 1 # int(batch_size)
         self.image_base_path = image_base_path
         self.shuffle = shuffle
         self.max_digit_length = max_digit_length
