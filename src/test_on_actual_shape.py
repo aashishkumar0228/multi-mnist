@@ -57,7 +57,6 @@ def main():
     
     test_multi_digit_dataset = MultiDigitDataLoaderActualShape(df_path = test_df_path,
                                                                image_base_path = test_image_actual_shape_base_path,
-                                                               batch_size = batch_size,
                                                                num_time_steps = num_time_steps,
                                                                transform = test_transform,
                                                                max_digit_length = max_digit_length,
