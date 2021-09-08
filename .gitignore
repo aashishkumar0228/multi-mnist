@@ -1,6 +1,6 @@
 # Output
 output/
-data_hw/
+data_single_digits_hw/
 output_2/
 saved_models/
 figures/
@@ -8,6 +8,10 @@ final_models/
 output_3/
 output_4/
 zone_classifier_data/
+real_data_hw/
+experimental/
+zone_classifier_model/
+real_data_ocr_model/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
