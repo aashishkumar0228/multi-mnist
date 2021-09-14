@@ -30,6 +30,8 @@ class MultiDigitDataLoader(tf.keras.utils.Sequence):
         self.img_width = img_width
         self.num_time_steps = num_time_steps
         self.transform = transform
+
+        self.char_to_int_map = {'0':0,'1':1,'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,'8':8,'9':9,'a':10}
         
         self.df = pd.read_csv(df_path, header = None, dtype={0: str, 1: str})
         self.df.columns = ["file_name", "labels"]
@@ -42,7 +44,8 @@ class MultiDigitDataLoader(tf.keras.utils.Sequence):
     
     def create_y_true(self, label):
         y_true = np.ones([1,self.max_digit_length]) * (-1)
-        num_list = [int(char) for char in label]
+        # num_list = [int(char) for char in label]
+        num_list = [self.char_to_int_map[char] for char in label]
         y_true[0, 0:len(label)] = num_list
         return y_true
     
@@ -108,6 +111,8 @@ class MultiDigitDataLoaderActualShape(tf.keras.utils.Sequence):
         self.max_digit_length = max_digit_length
         self.num_time_steps = num_time_steps
         self.transform = transform
+
+        self.char_to_int_map = {'0':0,'1':1,'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,'8':8,'9':9,'a':10}
         
         self.df = pd.read_csv(df_path, header = None, dtype={0: str, 1: str})
         self.df.columns = ["file_name", "labels"]
@@ -120,7 +125,8 @@ class MultiDigitDataLoaderActualShape(tf.keras.utils.Sequence):
     
     def create_y_true(self, label):
         y_true = np.ones([1,self.max_digit_length]) * (-1)
-        num_list = [int(char) for char in label]
+        # num_list = [int(char) for char in label]
+        num_list = [self.char_to_int_map[char] for char in label]
         y_true[0, 0:len(label)] = num_list
         return y_true
     

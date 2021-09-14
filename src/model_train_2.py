@@ -13,7 +13,7 @@ import tensorflow_addons as tfa
 
 
 from multi_digit_dataloader import MultiDigitDataLoader
-from models import build_small_model, build_big_model, build_big_model_no_compile
+from models import build_big_model_no_compile
 from utils import *
 from config import *
 
@@ -92,12 +92,11 @@ def main():
     print("\n\n")
 
     # Get the model
-    model = build_big_model_no_compile(img_height)
+    model = build_big_model_no_compile(img_height, num_classes)
     opt = keras.optimizers.Adam()
     # moving_avg_opt = tfa.optimizers.MovingAverage(opt)
     stochastic_avg_opt = tfa.optimizers.SWA(opt)
     # stochastic_avg_opt = tfa.optimizers.SWA(opt, start_averaging=4, average_period=5)
-
 
     # model.compile(optimizer=moving_avg_opt)
     model.compile(optimizer=stochastic_avg_opt)

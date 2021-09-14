@@ -112,6 +112,9 @@ def main():
     get_loss_plot(history_1, figure_folder_prefix)
     create_loss_csv(history_1, figure_folder_prefix)
 
+    print("\n\nSaving Original Model\n\n")
+    model.save(output_dir_prefix + "/" + model_folder_name + "_original")
+
     prediction_model = keras.models.Model(
         model.get_layer(name="image").input, model.get_layer(name="dense2").output
     )
