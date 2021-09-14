@@ -12,6 +12,7 @@ real_data_hw/
 experimental/
 zone_classifier_model/
 real_data_ocr_model/
+output_comma_1/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
