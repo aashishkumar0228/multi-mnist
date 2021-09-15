@@ -2,11 +2,11 @@ output_dir = "../saved_models/"
 figure_folder = "../figures/"
 
 # dataset paths
-train_df_path =         "/home/kaushikdas/aashish/multi-digit-dataset/output_comma_1/output_mix/train/labels_1_to_8_comma.csv"
-train_image_base_path = "/home/kaushikdas/aashish/multi-digit-dataset/output_comma_1/output_mix/train/combined_1_to_8_comma_real/"
-test_df_path =          "/home/kaushikdas/aashish/multi-digit-dataset/output_comma_1/output_mix/test/labels_1_to_8_comma.csv"
-test_image_base_path =  "/home/kaushikdas/aashish/multi-digit-dataset/output_comma_1/output_mix/test/combined_1_to_8_comma_real/"
-test_image_actual_shape_base_path = "/home/kaushikdas/aashish/multi-digit-dataset/output_comma_1/output_mix/test/combined_1_to_8_comma_actual_shape_real/"
+train_df_path =         "/home/kaushikdas/aashish/multi-digit-dataset/output_comma_2/output_mix/train/labels_1_to_8_comma.csv"
+train_image_base_path = "/home/kaushikdas/aashish/multi-digit-dataset/output_comma_2/output_mix/train/combined_1_to_8_comma_real/"
+test_df_path =          "/home/kaushikdas/aashish/multi-digit-dataset/output_comma_2/output_mix/test/labels_1_to_8_comma.csv"
+test_image_base_path =  "/home/kaushikdas/aashish/multi-digit-dataset/output_comma_2/output_mix/test/combined_1_to_8_comma_real/"
+test_image_actual_shape_base_path = "/home/kaushikdas/aashish/multi-digit-dataset/output_comma_2/output_mix/test/combined_1_to_8_comma_actual_shape_real/"
 # Local test paths
 # train_df_path = "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_2/test/labels_1.csv"
 # train_image_base_path = "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_2/test/1_reshape/"
