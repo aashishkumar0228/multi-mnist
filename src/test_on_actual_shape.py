@@ -46,9 +46,9 @@ def main():
     model = tf.keras.models.load_model(args.model_path)
     print(model.summary())
 
-    batch_size = 1
-    num_time_steps = 42
-    max_digit_length = 8
+    # batch_size = 1
+    # num_time_steps = 42
+    # max_digit_length = 8
     shuffle = False
 
     test_transform = A.Compose([
