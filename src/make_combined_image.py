@@ -20,8 +20,8 @@ num_samples_digits = [40000//2, 50000//2, 60000//2, 70000//2, 80000//2]
 max_width = 168
 max_height = 28
 
-base_path =         "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_comma_1/train/"
-output_base_path =  "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_comma_1/train/combined_1_to_8_random/"
+base_path =         "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_comma_2/train/"
+output_base_path =  "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_comma_2/train/combined_4_to_8_random/"
 if not os.path.isdir(output_base_path):
     os.mkdir(output_base_path)
 

@@ -21,8 +21,8 @@ max_width = 168
 max_height = 28
 
 
-base_path =         "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_comma_1/test/"
-output_base_path =  "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_comma_1/test/combined_1_to_8_actual_shape/"
+base_path =         "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_comma_2/test/"
+output_base_path =  "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_comma_2/test/combined_4_to_8_actual_shape/"
 if not os.path.isdir(output_base_path):
     os.mkdir(output_base_path)
 
