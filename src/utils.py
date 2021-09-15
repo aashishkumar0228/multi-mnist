@@ -13,6 +13,8 @@ def check_dataset(data):
         break
 
 def decode_batch_predictions(pred):
+    char_to_int_map = {'0':0,'1':1,'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,'8':8,'9':9,'a':10}
+    inv_map = {v: k for k, v in char_to_int_map.items()}
     input_len = np.ones(pred.shape[0]) * pred.shape[1]
     # Use greedy search. For complex tasks, you can use beam search
     results = keras.backend.ctc_decode(pred, input_length=input_len, greedy=True)[0][0]
@@ -23,7 +25,8 @@ def decode_batch_predictions(pred):
         pred_str = ""
         for i in res:
             if i != -1:
-                pred_str += str(i)
+                pred_str += inv_map[i]
+                # pred_str += str(i)
         output_preds.append(pred_str)
     return output_preds
 
