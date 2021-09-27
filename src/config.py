@@ -19,10 +19,10 @@ test_image_actual_shape_base_path = "/home/kaushikdas/aashish/multi-digit-datase
 # test_image_base_path = "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/output_2/test/combined_1_to_8_real/"
 
 
-model_folder_name =  "multi_digit_model_1_to_8_comma"
-model_json_file_name =  "multi_digit_model_1_to_8_comma_json.json"
-model_weights_file_name =  "multi_digit_model_1_to_8_comma_weights.h5"
-model_tflite_name =  "worksheet.multi_digit_model_1_to_8_comma.tflite"
+model_folder_name =  "multi_digit_model_1_to_8_comma_transformer"
+model_json_file_name =  "multi_digit_model_1_to_8_comma_transformer_json.json"
+model_weights_file_name =  "multi_digit_model_1_to_8_comma_transformer_weights.h5"
+model_tflite_name =  "worksheet.multi_digit_model_1_to_8_comma_transformer.tflite"
 
 # dataloader params
 img_height = 28
