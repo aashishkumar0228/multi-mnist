@@ -203,11 +203,11 @@ def get_loss_plot(history_1, figure_folder=None):
 @click.command()
 @click.option('--output_dir', default=None, help="Output directory to store artifacts")
 def main(output_dir):
-    train_df_path =         "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/real_data_hw/set-3/train/labels.csv"
-    train_image_base_path = "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/real_data_hw/set-3/train/all/"
+    train_df_path =         "/home/kaushikdas/aashish/multi-digit-dataset/real_data_hw/set-3/train/labels.csv"
+    train_image_base_path = "/home/kaushikdas/aashish/multi-digit-dataset/real_data_hw/set-3/train/all/"
 
-    test_df_path =         "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/real_data_hw/set-3/test/labels.csv"
-    test_image_base_path = "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/real_data_hw/set-3/test/all/"
+    test_df_path =         "/home/kaushikdas/aashish/multi-digit-dataset/real_data_hw/set-3/test/labels.csv"
+    test_image_base_path = "/home/kaushikdas/aashish/multi-digit-dataset/real_data_hw/set-3/test/all/"
 
     shuffle = True
 
@@ -234,7 +234,7 @@ def main(output_dir):
     check_dataset(train_multi_digit_dataset)
     check_dataset(test_multi_digit_dataset)
 
-    pretrained_model_path = "/Users/aashishkumar/Documents/Projects/forked_repos/multi-mnist/final_models/models/comma_try2/multi_digit_model_1_to_8_comma_original"
+    pretrained_model_path = "/home/kaushikdas/aashish/multi-mnist/saved_models/transformer_try1/multi_digit_model_1_to_8_comma_transformer_original"
     model = tf.keras.models.load_model(pretrained_model_path)
     print(model.summary())
 
@@ -287,10 +287,11 @@ def main(output_dir):
     print("Test Error %:",test_wrong_count/total_test_samples*100)
     print("Test Accuracy %:",(1 - (test_wrong_count/total_test_samples))*100)
 
-    model_folder_name = os.path.join(output_dir, "multi_digit_model_1_to_8_comma")
-    model_json_file_name = os.path.join(output_dir, "multi_digit_model_1_to_8_comma_json.json")
-    model_weights_file_name =  os.path.join(output_dir, "multi_digit_model_1_to_8_comma_weights.h5")
-    model_tflite_name = os.path.join(output_dir, "worksheet.multi_digit_ocr.tflite")
+    model_folder_name = os.path.join(c, "multi_digit_model_1_to_8_comma_transformer")
+    model_json_file_name = os.path.join(output_dir, "multi_digit_model_1_to_8_comma_transformer_json.json")
+    model_weights_file_name =  os.path.join(output_dir, "multi_digit_model_1_to_8_comma_transformer_weights.h5")
+    # model_tflite_name = os.path.join(output_dir, "worksheet.multi_digit_ocr.tflite")
+    model_tflite_name = os.path.join(output_dir, "worksheet.multi_digit_model_1_to_8_comma_transformer_retrain.tflite")
 
     print("\n\nSaving Original Model\n\n")
     model.save(model_folder_name + "_original")
@@ -298,9 +299,9 @@ def main(output_dir):
     print("\n\nSaving Prediction Model\n\n")
     prediction_model.save(model_folder_name)
 
-    model_json = prediction_model.to_json()
-    with open(model_json_file_name, "w") as json_file:
-        json_file.write(model_json)
+    # model_json = prediction_model.to_json()
+    # with open(model_json_file_name, "w") as json_file:
+    #     json_file.write(model_json)
 
     prediction_model.save_weights(model_weights_file_name)
 
