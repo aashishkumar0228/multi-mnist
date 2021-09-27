@@ -34,7 +34,7 @@ shuffle = True
 # model params
 num_classes = 12
 # batch_size = 256
-batch_size = 32
+batch_size = 1
 epochs = 10
 early_stopping_patience = 3
 
