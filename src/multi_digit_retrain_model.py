@@ -199,6 +199,39 @@ def get_loss_plot(history_1, figure_folder=None):
     plt.legend()
     plt.savefig(os.path.join(figure_folder, "loss.png"))
 
+def create_loss_csv(history_1, figure_folder=None):
+    loss_df = pd.DataFrame(list(zip(history_1.epoch, history_1.history['loss'], history_1.history['val_loss'])), 
+                            columns = ['Epoch', 'Train_Loss', 'Val_loss'])
+    loss_df.to_csv(os.path.join(figure_folder, "loss.csv"), index=None)
+
+def show_edit_distance_freq_graph(edit_distance_freq, title, figure_folder=None):
+    plt.figure(figsize=(7,5))
+    plt.bar(edit_distance_freq.keys(),edit_distance_freq.values(),width = 0.8,color="orange")
+    for i in edit_distance_freq:
+        plt.text(i,edit_distance_freq[i],str(edit_distance_freq[i]),horizontalalignment='center',fontsize=10)
+
+    plt.tick_params(labelsize = 14)
+    plt.xticks(range(0,8))
+    plt.xlabel("Edit Distance",fontsize=16)
+    plt.ylabel("Frequency",fontsize=16)
+    plt.title(title)
+    figure_name = title + ".png"
+    plt.savefig(os.path.join(figure_folder, figure_name))
+
+def show_word_length_freq_graph(freq_var, title, figure_folder=None):
+    plt.figure(figsize=(7,5))
+    plt.bar(freq_var.keys(),freq_var.values(),width = 0.8,color="orange")
+    for i in freq_var:
+        plt.text(i,freq_var[i],str(freq_var[i]),horizontalalignment='center',fontsize=10)
+
+    plt.tick_params(labelsize = 14)
+    plt.xticks(range(0,10))
+    plt.xlabel("word length",fontsize=16)
+    plt.ylabel("Frequency",fontsize=16)
+    plt.title(title)
+    figure_name = title + ".png"
+    plt.savefig(os.path.join(figure_folder, figure_name))
+
 
 @click.command()
 @click.option('--output_dir', default=None, help="Output directory to store artifacts")
@@ -253,6 +286,7 @@ def main(output_dir):
                           )
     
     get_loss_plot(history_1, output_dir)
+    create_loss_csv(history_1, output_dir)
 
     prediction_model = keras.models.Model(
         model.get_layer(name="image").input, model.get_layer(name="dense2").output
@@ -269,11 +303,18 @@ def main(output_dir):
     
     print("\nCalculating Edit Distance\n")
     train_edit_distance_freq, train_wrong_count = get_edit_distance_freq(df_train_labels)
+    show_edit_distance_freq_graph(train_edit_distance_freq, "train_edit_distance_frequency", output_dir)
     test_edit_distance_freq, test_wrong_count = get_edit_distance_freq(df_test_labels)
+    show_edit_distance_freq_graph(test_edit_distance_freq, "test_edit_distance_frequency", output_dir)
 
     print("\nCalculating Word Length Frequency\n")
     train_correct_word_length_freq, train_wrong_word_length_freq = get_word_leng_freq(df_train_labels)
+    show_word_length_freq_graph(train_wrong_word_length_freq,"train_wrong_word_length_frequency", output_dir)
+    show_word_length_freq_graph(train_correct_word_length_freq,"train_correct_word_length_frequency", output_dir)
+
     test_correct_word_length_freq, test_wrong_word_length_freq = get_word_leng_freq(df_test_labels)
+    show_word_length_freq_graph(test_wrong_word_length_freq,"test_wrong_word_length_frequency", output_dir)
+    show_word_length_freq_graph(test_correct_word_length_freq,"test_correct_word_length_frequency", output_dir)
 
     total_train_samples = df_train_labels.shape[0]
     print("Train wrong:", train_wrong_count)
@@ -287,7 +328,18 @@ def main(output_dir):
     print("Test Error %:",test_wrong_count/total_test_samples*100)
     print("Test Accuracy %:",(1 - (test_wrong_count/total_test_samples))*100)
 
-    model_folder_name = os.path.join(c, "multi_digit_model_1_to_8_comma_transformer")
+    train_accuracy_file = open(os.path.join(output_dir, "train_test_accuracy.txt"), 'w')
+    train_accuracy_file.write("Train wrong: {}\n".format(train_wrong_count))
+    train_accuracy_file.write("Train size: {}\n".format(total_train_samples))
+    train_accuracy_file.write("Train Error %: {}\n".format(train_wrong_count/total_train_samples*100))
+    train_accuracy_file.write("Train Accuracy %: {:.2f}\n\n".format((1 - (train_wrong_count/total_train_samples))*100))
+    train_accuracy_file.write("Test wrong: {}\n".format(test_wrong_count))
+    train_accuracy_file.write("Test size: {}\n".format(total_test_samples))
+    train_accuracy_file.write("Test Error %: {}\n".format(test_wrong_count/total_test_samples*100))
+    train_accuracy_file.write("Test Accuracy %: {:.2f}\n".format((1 - (test_wrong_count/total_test_samples))*100))
+    train_accuracy_file.close()
+
+    model_folder_name = os.path.join(output_dir, "multi_digit_model_1_to_8_comma_transformer")
     model_json_file_name = os.path.join(output_dir, "multi_digit_model_1_to_8_comma_transformer_json.json")
     model_weights_file_name =  os.path.join(output_dir, "multi_digit_model_1_to_8_comma_transformer_weights.h5")
     # model_tflite_name = os.path.join(output_dir, "worksheet.multi_digit_ocr.tflite")
