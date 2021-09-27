@@ -267,7 +267,7 @@ def main(output_dir):
     check_dataset(train_multi_digit_dataset)
     check_dataset(test_multi_digit_dataset)
 
-    pretrained_model_path = "/home/kaushikdas/aashish/multi-mnist/saved_models/transformer_try1/multi_digit_model_1_to_8_comma_transformer_original"
+    pretrained_model_path = "/home/kaushikdas/aashish/multi-mnist/saved_models/transformer_try2/multi_digit_model_1_to_8_comma_transformer_original"
     model = tf.keras.models.load_model(pretrained_model_path)
     print(model.summary())
 
@@ -343,7 +343,7 @@ def main(output_dir):
     model_json_file_name = os.path.join(output_dir, "multi_digit_model_1_to_8_comma_transformer_json.json")
     model_weights_file_name =  os.path.join(output_dir, "multi_digit_model_1_to_8_comma_transformer_weights.h5")
     # model_tflite_name = os.path.join(output_dir, "worksheet.multi_digit_ocr.tflite")
-    model_tflite_name = os.path.join(output_dir, "worksheet.multi_digit_model_1_to_8_comma_transformer_retrain.tflite")
+    model_tflite_name = os.path.join(output_dir, "worksheet.multi_digit_model_1_to_8_comma_transformer_try2_retrain.tflite")
 
     print("\n\nSaving Original Model\n\n")
     model.save(model_folder_name + "_original")
