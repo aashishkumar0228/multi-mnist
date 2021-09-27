@@ -275,7 +275,7 @@ def main(output_dir):
     stochastic_avg_opt = tfa.optimizers.SWA(opt)
     model.compile(optimizer=stochastic_avg_opt)
 
-    epochs = 5
+    epochs = 10
     lrr = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss',patience=2,verbose=1,factor=0.5, min_lr=0.000001)
     # Train the model
     history_1 = model.fit(
