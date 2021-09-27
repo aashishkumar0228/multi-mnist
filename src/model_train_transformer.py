@@ -13,7 +13,7 @@ import tensorflow_addons as tfa
 
 
 from multi_digit_dataloader import MultiDigitDataLoader
-from models import build_transformer_ocr_model
+from models import build_big_transformer_ocr_model
 from utils import *
 from config import *
 
@@ -92,7 +92,7 @@ def main():
     print("\n\n")
 
     # Get the model
-    model = build_transformer_ocr_model(img_height, num_classes)
+    model = build_big_transformer_ocr_model(img_height, num_classes)
     opt = keras.optimizers.Adam()
     # moving_avg_opt = tfa.optimizers.MovingAverage(opt)
     stochastic_avg_opt = tfa.optimizers.SWA(opt)
